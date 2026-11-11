@@ -1,0 +1,73 @@
+Analysis summary:
+Dataset overview
+Size: 4,521 customers and 17 columns (7 numeric, 10 text).
+Quality: there are no null values and no duplicate rows.
+Hidden missing data: "unknown" appears in poutcome (3,705 rows, 82%), contact (1,324, 29%), education (187, 4%) and job (38, under 1%). poutcome and contact are too incomplete to be reliable on their own.
+Target: term deposit subscription
+
+Only 11.5% of customers subscribed (521 yes vs 4,000 no). The classes are strongly imbalanced, so a model that always predicts “no” would be about 88% accurate and still useless.
+
+Account balance
+Statistic	Value
+Mean	1,423
+Median	444
+Minimum	-3,313
+Maximum	71,188
+Balance is heavily right-skewed (skewness about 6.6). A few very wealthy customers pull the mean to more than three times the median, so the median is the better measure of a typical customer.
+506 balances are IQR outliers, and 366 customers are overdrawn.
+1,481 customers (about 33%) have a balance above 1,000.
+Highest average balance by job: retired (2,319), housemaid (2,084) and management (1,767).
+Lowest average balance: blue-collar (1,085), unemployed (1,089) and services (1,104).
+Management and blue-collar are the largest job groups, and management holds the largest total balance (about 1.7 million).
+Who subscribes
+
+Job
+
+The highest rates are retired (23.5%) and student (22.6%).
+The lowest are blue-collar (7.3%), entrepreneur (8.9%) and services (9.1%).
+
+Age
+
+Customers over 60 subscribe at about 38%, but there are only 127 of them, so treat that figure with caution.
+Customers aged 30 and under subscribe at about 14%.
+Ages 30 to 60 sit at about 10%.
+
+Marital status and education
+
+Single (14.0%) and divorced (14.6%) customers subscribe more than married ones (9.9%).
+Tertiary education has the highest rate (14.3%), and primary has the lowest (9.4%).
+
+Existing loans
+
+Customers with a housing loan subscribe at 8.6% against 15.3% without one.
+Customers with a personal loan subscribe at 6.2% against 12.5% without one.
+default shows no meaningful difference, and only 76 customers have defaulted.
+
+Previous campaign
+
+Customers who said yes to an earlier campaign (poutcome = success) subscribe at 64.3%, but there are only 129 of them.
+
+Contact method
+
+Customers with an unknown contact type subscribe at only 4.6%, against about 14.5% for cellular and telephone.
+
+Call duration
+
+Subscribers had a median call of 442 seconds against 167 for non-subscribers, about 2.6 times longer.
+Duration is only known after the call, so it is not useful for deciding who to call. It would also leak the outcome into a predictive model.
+
+Month
+
+Some months show very high rates (October 46%, December 45%, March 43%, September 33%) against May at 6.7%.
+I didn’t check how many calls were made in each month. The high-rate months are probably low-volume, so be careful about drawing conclusions from them.
+Correlations
+
+Numeric variables are mostly uncorrelated. The only notable pair is pdays and previous (0.58), which makes sense because customers contacted before have both values filled in. age and balance correlate weakly (0.08).
+
+Conclusions
+The data is clean, but unknown values need explicit handling, especially in poutcome and contact.
+The 11.5% subscription rate makes this an imbalanced classification problem. Judge any model by recall, precision and AUC, not accuracy.
+Balance is skewed with many outliers. Report medians, or use a log transform before modelling.
+The best targets for a campaign are retired customers, students, people without housing or personal loans, and people who responded well to earlier campaigns.
+Blue-collar workers and customers with loans are the weakest segments.
+A natural next step is logistic regression or a random forest, with categorical encoding and duration left out for a realistic model.

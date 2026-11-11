@@ -1,0 +1,33 @@
+# ---------- Jupyter ----------
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# ---------- Virtual environments ----------
+venv/
+.venv/
+env/
+ENV/
+
+# ---------- Secrets (never push these) ----------
+.env
+.env.*
+*.key
+*.pem
+secrets.json
+
+# ---------- Editors ----------
+.vscode/
+.idea/
+
+# ---------- OS files ----------
+.DS_Store
+Thumbs.db
+desktop.ini
+
